@@ -23,17 +23,17 @@ module.exports = ({ webp = false, breakpoints = [] }) => {
         objectMode: true,
 
         transform(file, encoding, callback) {
-            // console.log(chunk, encoding)
 
             if (file.isNull()) return callback(null, file)
 
+            // get content from the current file
             let content = file.contents.toString(encoding)
+
             // clone string
             let contentClone = content.slice(0)
-            console.log(breakpoints)
+            
             // for each image tag inside this html document
             contentClone.match(imageRegex).forEach((img) => {
-                console.log(img)
 
                 // we parse the src attribute of this image
                 let src = img
@@ -52,15 +52,11 @@ module.exports = ({ webp = false, breakpoints = [] }) => {
                 // filenameWithoutExt stores the filename without it extension and ext is the extension
                 let [filenameWithoutExt, ext] = filename.split('.')
 
-                console.log(filenameWithoutExt, ext)
-
                 // we get all breakpoints from the configuration
                 let bp = breakpoints.filter(b => b.width !== undefined)
 
                 // we get the original image
                 let original = breakpoints.find(b => b.width === undefined)
-
-                console.log(bp, original)
 
                 /**
                  * we construct all source tag from the configuration
