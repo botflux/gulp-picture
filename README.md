@@ -17,4 +17,4 @@ gulp
 
 ## Note
 
-This implementation is just a 'sandbox'. The guidelines is not respected.
+This implementation is just a 'sandbox'. The guidelines are not respected.
