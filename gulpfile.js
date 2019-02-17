@@ -1,4 +1,5 @@
-const { task, series, src, dest }   = require('gulp')
+const { task, series, src, dest }               = require('gulp')
+const { imageRegex, srcRegex, fileSrcRegex }    = require('./src/regex')
 const responsiveImage   = require('gulp-responsive')
 const clean             = require('gulp-clean')
 const webp              = require('gulp-webp')
@@ -7,11 +8,6 @@ const getFilePath       = require('./src/getFilePath')
 const { Transform } = require('stream')
 
 const pictureTransform = ({ webp = false, breakpoints = [] }) => {
-
-    const imageRegex    = /<img([^>]*[^/])>/g
-    const srcRegex      = /src\s*=\s*"(.+?)"/g
-    const fileSrcRegex  = /"(.+?)"/g
-    
     return new Transform({
         objectMode: true,
 
