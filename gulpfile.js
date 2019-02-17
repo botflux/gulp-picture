@@ -2,6 +2,7 @@ const { task, series, src, dest }   = require('gulp')
 const responsiveImage   = require('gulp-responsive')
 const clean             = require('gulp-clean')
 const webp              = require('gulp-webp')
+const getFilePath       = require('./src/getFilePath')
 
 const { Transform } = require('stream')
 
@@ -10,27 +11,7 @@ const pictureTransform = ({ webp = false, breakpoints = [] }) => {
     const imageRegex    = /<img([^>]*[^/])>/g
     const srcRegex      = /src\s*=\s*"(.+?)"/g
     const fileSrcRegex  = /"(.+?)"/g
-
-    /**
-     * Construct filename
-     * 
-     * @param {[]} folders Folders
-     * @param {String} filenameWithoutExt Filename without extension
-     * @param {String} suffix Suffix you need to add
-     * @param {String} ext File extension
-     */
-    const getFilePath = (folders, filenameWithoutExt, suffix, ext) => {
-        folders = folders.reverse()
-
-        let res = folders.reduce((prev, cur, i) => {
-            if (i === 0) return cur
-
-            return `${prev}/${cur}`
-        }, '')
-
-        return `${res}/${filenameWithoutExt}${suffix}.${ext === 'jpg' ? 'jpeg': ext}`
-    }
-
+    
     return new Transform({
         objectMode: true,
 
