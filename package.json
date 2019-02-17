@@ -1,13 +1,17 @@
 {
   "name": "gulp-picture",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Gulp plugin to change html img tag into picture tag.",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "",
+  "author": "Victor Mendele <victor.mendele68@gmail.com>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/botflux/gulp-picture.git"
+  },
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
