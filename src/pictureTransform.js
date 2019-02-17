@@ -1,15 +1,33 @@
 const { imageRegex, srcRegex, fileSrcRegex }    = require('./regex')
 const getFilePath       = require('./getFilePath')
 const { Transform }     = require('stream')
+const PluginError             = require('plugin-error')
+
+const PLUGIN_NAME = 'gulp-picture'
 
 module.exports = ({ webp = false, breakpoints = [] }) => {
+
+    if (typeof webp !== 'boolean') {
+        throw new PluginError(PLUGIN_NAME, 'Webp parameter must be a boolean !')
+    }
+
+    if (!Array.isArray(breakpoints)) {
+        throw new PluginError(PLUGIN_NAME, 'Breakpoints must be an array !')
+    }
+
+    if (breakpoints.length === 0) {
+        throw new PluginError(PLUGIN_NAME, 'The original breakpoints must be given !')
+    }
+
     return new Transform({
         objectMode: true,
 
-        transform(chunk, encoding, callback) {
+        transform(file, encoding, callback) {
             // console.log(chunk, encoding)
 
-            let content = chunk.contents.toString(encoding)
+            if (file.isNull()) return callback(null, file)
+
+            let content = file.contents.toString(encoding)
             // clone string
             let contentClone = content.slice(0)
             console.log(breakpoints)
@@ -61,11 +79,13 @@ module.exports = ({ webp = false, breakpoints = [] }) => {
                     return prev
                 }, '')
 
+                const suf = (original.rename === undefined ? '' : original.rename.suffix) || ''
+
                 if (webp) {
-                    sources += `<source srcset="${getFilePath(folders, filenameWithoutExt, original.rename.suffix, 'webp')}">`
+                    sources += `<source srcset="${getFilePath(folders, filenameWithoutExt, suf, 'webp')}">`
                 }
                 // we add the fallback
-                sources += img.replace(srcRegex, `src="${getFilePath(folders, filenameWithoutExt, original.rename.suffix, ext)}"`)
+                sources += img.replace(srcRegex, `src="${getFilePath(folders, filenameWithoutExt, suf, ext)}"`)
 
 
                 // we surround all picture child tag by a picture tag
@@ -76,10 +96,10 @@ module.exports = ({ webp = false, breakpoints = [] }) => {
             })
 
             // we replace all the current html content by the modified one 
-            chunk.contents = Buffer.from(content)
+            file.contents = Buffer.from(content)
 
             // we write the new file in the stream
-            this.push(chunk)
+            this.push(file)
             callback()
         }
     })

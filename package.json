@@ -12,6 +12,7 @@
     "gulp": "^4.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-responsive": "^2.13.0",
-    "gulp-webp": "^4.0.1"
+    "gulp-webp": "^4.0.1",
+    "plugin-error": "^1.0.1"
   }
 }
