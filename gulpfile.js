@@ -174,24 +174,24 @@ const responsiveConfig = {
 }
 
 const images =  () => {
-    return src('src/images/*.jpg')
+    return src('test/src/images/*.jpg')
         .pipe(responsiveImage(responsiveConfig, {
             quality: 70,
             progressive: true
         }))
-        .pipe(dest('dist/images'))
+        .pipe(dest('test/dist/images'))
         .pipe(webp())
-        .pipe(dest('dist/images/'))
+        .pipe(dest('test/dist/images/'))
 }
 
 const html = () => {
-    return src('src/*.html')
+    return src('test/src/*.html')
         .pipe(pictureTransform({webp: true, breakpoints: responsiveConfig['*.jpg']}))
-        .pipe(dest('dist/'))
+        .pipe(dest('test/dist/'))
 }
 
 const cleanDist = () => {
-    return src('dist/', { read: false, allowEmpty: true })
+    return src('test/dist/', { read: false, allowEmpty: true })
         .pipe(clean())
 }
 
