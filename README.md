@@ -10,7 +10,7 @@ npm install --save-dev gulp-picture
 
 ## Documentation
 
-Comming soon
+Coming soon
 
 ## Install
 
