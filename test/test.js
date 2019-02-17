@@ -1,5 +1,4 @@
 const assert = require('assert')
-const es = require('event-stream')
 const File = require('vinyl')
 const pictureTransform = require('../src/pictureTransform')
 
