@@ -57,7 +57,6 @@ const responsiveConfig = {
     ],
 }
 
-
 /**
  * Process jpg images
  */
