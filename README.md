@@ -1,6 +1,16 @@
 # gulp-picture
 
-A gulp plugin that replace html image tags by picture tags.
+A gulp plugin that replace html image tags by picture tags. This plugin works with `gulp-responsive`.
+
+## Installation
+
+```
+npm install --save-dev gulp-picture
+```
+
+## Documentation
+
+Comming soon
 
 ## Install
 
