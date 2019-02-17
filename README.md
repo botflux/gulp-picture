@@ -11,6 +11,9 @@ git clone https://github.com/botflux/gulp-picture.git
 # Install node modules
 npm install
 
+# Run tests
+npm test
+
 # Start gulp
 gulp
 ```
