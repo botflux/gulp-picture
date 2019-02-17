@@ -15,5 +15,5 @@ module.exports = (folders, filenameWithoutExt, suffix, ext) => {
         return `${prev}/${cur}`
     }, '')
 
-    return `${res}/${filenameWithoutExt}${suffix}.${ext === 'jpg' ? 'jpeg': ext}`
+    return `${res}${res.length === 0 ? '': '/'}${filenameWithoutExt}${suffix}.${ext === 'jpg' ? 'jpeg': ext}`
 }
