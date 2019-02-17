@@ -57,6 +57,10 @@ const responsiveConfig = {
     ],
 }
 
+
+/**
+ * Process jpg images
+ */
 const images =  () => {
     return src('test/src/images/*.jpg')
         .pipe(responsiveImage(responsiveConfig, {
@@ -68,12 +72,18 @@ const images =  () => {
         .pipe(dest('test/dist/images/'))
 }
 
+/**
+ * Process html files
+ */
 const html = () => {
     return src('test/src/*.html')
-        .pipe(pictureTransform({webp: true, breakpoints: responsiveConfig['*.jpg']}))
+        .pipe(pictureTransform({ webp: true, breakpoints: responsiveConfig['*.jpg'] }))
         .pipe(dest('test/dist/'))
 }
 
+/**
+ * Clean the distribution folder
+ */
 const cleanDist = () => {
     return src('test/dist/', { read: false, allowEmpty: true })
         .pipe(clean())
