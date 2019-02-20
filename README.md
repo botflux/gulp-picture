@@ -10,7 +10,7 @@ npm install --save-dev gulp-picture
 
 ## How to use it ?
 
-The array for breakpoints is the as [gulp-responsive](https://npmjs.org/package/gulp-responsive).
+The array for breakpoints is the same as [gulp-responsive](https://npmjs.org/package/gulp-responsive).
 
 ```js
 const { src, dist, task } = require('gulp')
