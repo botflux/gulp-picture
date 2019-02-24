@@ -5,7 +5,7 @@ const PluginError             = require('plugin-error')
 
 const PLUGIN_NAME = 'gulp-picture'
 
-module.exports = ({ webp = false, breakpoints = [] }) => {
+module.exports = ({ webp = false, breakpoints = [], lazyLoad = 'data-lazy' }) => {
 
     if (typeof webp !== 'boolean') {
         throw new PluginError(PLUGIN_NAME, 'Webp parameter must be a boolean !')
