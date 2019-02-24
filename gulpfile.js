@@ -76,7 +76,7 @@ const images =  () => {
  */
 const html = () => {
     return src('test/src/*.html')
-        .pipe(pictureTransform({ webp: true, breakpoints: responsiveConfig['*.jpg'] }))
+        .pipe(pictureTransform({ webp: true, breakpoints: responsiveConfig['*.jpg'], lazyLoad: 'data-lazy' }))
         .pipe(dest('test/dist/'))
 }
 

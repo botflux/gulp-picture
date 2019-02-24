@@ -1,11 +1,12 @@
-const { imageRegex, srcRegex, fileSrcRegex }    = require('./regex')
+const { imageRegex, srcRegex, fileSrcRegex, makeLazyRegex }    = require('./regex')
 const getFilePath       = require('./getFilePath')
 const { Transform }     = require('stream')
 const PluginError             = require('plugin-error')
 
 const PLUGIN_NAME = 'gulp-picture'
 
-module.exports = ({ webp = false, breakpoints = [], lazyLoad = 'data-lazy' }) => {
+const makeSrcSet = (lazy, content) => (lazy == '') ? `srcset="${content}"` : `${lazy}="${content}"`
+module.exports = ({ webp = false, breakpoints = [], lazyLoad = '' }) => {
 
     if (typeof webp !== 'boolean') {
         throw new PluginError(PLUGIN_NAME, 'Webp parameter must be a boolean !')
@@ -37,7 +38,7 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = 'data-lazy' }) =>
 
                 // we parse the src attribute of this image
                 let src = img
-                    .match(srcRegex)[0]
+                    .match((lazyLoad === '' ? srcRegex : makeLazyRegex(lazyLoad)))[0]
                     .match(fileSrcRegex)[0]
                     .replace(/"/g, '')
 
@@ -65,10 +66,10 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = 'data-lazy' }) =>
                     let currentString = ''
 
                     if (webp) {
-                        currentString += `<source media="(min-width: ${cur.width}px)" srcset="${getFilePath(folders, filenameWithoutExt, cur.rename.suffix, 'webp')}">`
+                        currentString += `<source media="(min-width: ${cur.width}px)" ${makeSrcSet(lazyLoad, getFilePath(folders, filenameWithoutExt, cur.rename.suffix, 'webp'))}>`
                     }
-
-                    currentString += `<source media="(min-width: ${cur.width}px)" srcset="${getFilePath(folders, filenameWithoutExt, cur.rename.suffix, ext)}">`
+                    //srcset="${getFilePath(folders, filenameWithoutExt, cur.rename.suffix, ext)}"
+                    currentString += `<source media="(min-width: ${cur.width}px)" ${makeSrcSet(lazyLoad, getFilePath(folders, filenameWithoutExt, cur.rename.suffix, ext))}>`
 
 
                     prev += currentString
@@ -78,10 +79,10 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = 'data-lazy' }) =>
                 const suf = (original.rename === undefined ? '' : original.rename.suffix) || ''
 
                 if (webp) {
-                    sources += `<source srcset="${getFilePath(folders, filenameWithoutExt, suf, 'webp')}">`
+                    sources += `<source srcset="${makeSrcSet(lazyLoad, getFilePath(folders, filenameWithoutExt, suf, 'webp'))}">`
                 }
                 // we add the fallback
-                sources += img.replace(srcRegex, `src="${getFilePath(folders, filenameWithoutExt, suf, ext)}"`)
+                sources += img.replace((lazyLoad === '' ? srcRegex : makeLazyRegex(lazyLoad)), `${lazyLoad === '' ? 'src' : lazyLoad}="${getFilePath(folders, filenameWithoutExt, suf, ext)}"`)
 
 
                 // we surround all picture child tag by a picture tag
