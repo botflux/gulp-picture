@@ -4,7 +4,8 @@
   "description": "Gulp plugin to change html img tag into picture tag.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test-watch": "mocha --watch"
   },
   "author": "Victor Mendele <victor.mendele68@gmail.com>",
   "license": "ISC",

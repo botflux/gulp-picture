@@ -25,14 +25,20 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = '' }) => {
 
         transform(file, encoding, callback) {
 
+            // if the file is null we return
             if (file.isNull()) return callback(null, file)
+
+            if (file.isStream()) return callback(null, file)
 
             // get content from the current file
             let content = file.contents.toString(encoding)
 
+            // if there is no img tag inside the file we return
+            if (!Array.isArray(content.match(imageRegex))) return callback(null, file)
+
             // clone string
             let contentClone = content.slice(0)
-            
+
             // for each image tag inside this html document
             contentClone.match(imageRegex).forEach((img) => {
 
