@@ -1,6 +1,6 @@
 {
   "name": "gulp-picture",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Gulp plugin to change html img tag into picture tag.",
   "main": "index.js",
   "scripts": {
