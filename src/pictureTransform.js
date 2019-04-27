@@ -47,9 +47,9 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = '' }) => {
                 console.log(img, isLazy)
 
                 // we parse the src attribute of this image
-                let src = img
-                    .match((!isLazy ? srcRegex : makeLazyRegex(lazyLoad)))[0]
-                    .match(fileSrcRegex)[0]
+                let src = ((img
+                    .match((!isLazy ? srcRegex : makeLazyRegex(lazyLoad))) [0] || '')
+                    .match(fileSrcRegex)[0] || '')
                     .replace(/"/g, '')
 
                 // we parse file name
@@ -87,12 +87,15 @@ module.exports = ({ webp = false, breakpoints = [], lazyLoad = '' }) => {
                 }, '')
 
                 const suf = (original.rename === undefined ? '' : original.rename.suffix) || ''
-
+                console.log(folders)
                 if (webp) {
                     sources += `<source ${makeSrcSet(isLazy, lazyLoad, getFilePath(folders, filenameWithoutExt, suf, 'webp'))}>`
                 }
                 // we add the fallback
-                sources += img.replace((!isLazy ? srcRegex : makeLazyRegex(lazyLoad)), `${!isLazy ? 'src' : lazyLoad}="${getFilePath(folders, filenameWithoutExt, suf, ext)}"`)
+                sources += img.replace(
+                    (!isLazy ? srcRegex : makeLazyRegex(lazyLoad)), 
+                    `${!isLazy ? 'src' : lazyLoad}="${getFilePath(folders, filenameWithoutExt, suf, ext)}"`
+                )
 
 
                 // we surround all picture child tag by a picture tag

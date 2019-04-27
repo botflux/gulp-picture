@@ -7,9 +7,9 @@
  * @param {String} ext File extension
  */
 module.exports = (folders, filenameWithoutExt, suffix, ext) => {
-    folders = folders.reverse()
+    const localFolders = [...folders].reverse()
 
-    let res = folders.reduce((prev, cur, i) => {
+    let res = localFolders.reduce((prev, cur, i) => {
         if (i === 0) return cur
 
         return `${prev}/${cur}`

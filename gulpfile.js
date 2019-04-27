@@ -5,7 +5,7 @@ const webp              = require('gulp-webp')
 const pictureTransform  = require('./src/pictureTransform')
 
 const responsiveConfig = {
-    '*.jpg': [
+    '**/*.jpg': [
         {
             width: 200,
             rename: {
@@ -61,12 +61,12 @@ const responsiveConfig = {
  * Process jpg images
  */
 const images =  () => {
-    return src('test/src/images/*.jpg')
+    return src('test/src/images/**/*.jpg')
         .pipe(responsiveImage(responsiveConfig, {
             quality: 70,
             progressive: true
         }))
-        .pipe(dest('test/dist/images'))
+        .pipe(dest('test/dist/images/'))
         .pipe(webp())
         .pipe(dest('test/dist/images/'))
 }
@@ -76,7 +76,7 @@ const images =  () => {
  */
 const html = () => {
     return src('test/src/*.html')
-        .pipe(pictureTransform({ webp: true, breakpoints: responsiveConfig['*.jpg'], lazyLoad: 'data-lazy' }))
+        .pipe(pictureTransform({ webp: true, breakpoints: responsiveConfig['**/*.jpg'], lazyLoad: 'data-lazy' }))
         .pipe(dest('test/dist/'))
 }
 
