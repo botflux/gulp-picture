@@ -47,6 +47,11 @@ const imageHolderFactory = imageRegex => {
      */
     const get = name => knownFiles[name]
 
+    /**
+     * /!\
+     * Property is meant to be use in test
+     * /!\
+     */
     return {
         get,
         contain,
