@@ -8,6 +8,12 @@ describe ('#imageHolderFactory', () => {
             expect (f).toThrow (GulpPictureError)
             expect (f).toThrow ('suffixRegex must be an instance of RegExp')
         })
+
+        it ('not throws an error when the _imageRegex_ is missing', () => {
+            const f = () => imageHolderFactory ()
+
+            expect (f).not.toThrow ()
+        })
     })
 
     describe ('functions', () => {
@@ -72,6 +78,14 @@ describe ('#imageHolderFactory', () => {
                 expect('suffix' in r).toBe(true)
                 expect(typeof r.filename).toBe('string')
                 expect(typeof r.suffix).toBe('string')
+            })
+        })
+
+        describe ('#setRegex', () => {
+            it ('throws an error when the the parameter is not a regex', () => {
+                const r = () => imageHolder.setRegex ({})
+                expect (r).toThrow (GulpPictureError)
+                expect (r).toThrow ('_regex_ must be an instance of RegExp')
             })
         })
     })

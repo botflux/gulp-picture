@@ -5,10 +5,12 @@ const GulpPictureError = require ('./error/gulp-picture-error')
  * 
  * @param {RegExp} suffixRegex A regex that cut the suffix of image name
  */
-const imageHolderFactory = imageRegex => {
+const imageHolderFactory = _imageRegex => {
 
-    if (!(imageRegex instanceof RegExp))
+    if (_imageRegex && !(_imageRegex instanceof RegExp))
         throw new GulpPictureError ('suffixRegex must be an instance of RegExp')
+
+    let imageRegex = new RegExp (_imageRegex)
 
     let knownFiles = {}
 
@@ -47,6 +49,12 @@ const imageHolderFactory = imageRegex => {
      */
     const get = name => knownFiles[name]
 
+    const setRegex = regex => {
+        if (!(regex instanceof RegExp)) throw new GulpPictureError ('_regex_ must be an instance of RegExp')
+
+        imageRegex = new RegExp (regex)
+    }
+
     /**
      * /!\
      * Property is meant to be use in test
@@ -57,7 +65,8 @@ const imageHolderFactory = imageRegex => {
         contain,
         add,
         cutFilename,
-        data: _ => knownFiles
+        data: _ => knownFiles,
+        setRegex
     }
 }
 
